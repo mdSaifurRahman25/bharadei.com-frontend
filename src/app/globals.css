@@ -1,1 +1,173 @@
 @import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --bg-band: #faf8fe;
+  --surface: #ffffff;
+  --surface-soft: #f4eefe;
+  --surface-tint: #f0e7ff;
+  --surface-blue: #eaf1ff;
+  --ink: #211a31;
+  --ink-strong: #120e24;
+  --body: #5f566e;
+  --muted: #8e839b;
+  --line: #ece7f2;
+  --card-line: #e6e0eb;
+  --purple: #7624f4;
+  --purple-hover: #5b14cf;
+  --purple-2: #6a1fe0;
+  --blue: #0c50fb;
+  --blue-hover: #083ec9;
+  --night: #1c1728;
+  --night-border: #2f2940;
+  --shadow-card: 0 18px 40px -22px rgba(60, 40, 140, 0.24);
+  --shadow-sm: 0 4px 16px -6px rgba(33, 26, 49, 0.08);
+}
+
+html.dark {
+  --bg: #130f1d;
+  --bg-band: #191426;
+  --surface: #1c1728;
+  --surface-soft: #261f38;
+  --surface-tint: #2e2447;
+  --surface-blue: #19223d;
+  --ink: #f5f2fa;
+  --ink-strong: #ffffff;
+  --body: #c4bdd4;
+  --muted: #938aa8;
+  --line: #2f2940;
+  --card-line: #342d47;
+  --purple: #8b46ff;
+  --purple-hover: #7624f4;
+  --purple-2: #7c3aed;
+  --blue: #3b76ff;
+  --blue-hover: #2563eb;
+  --night: #0d0a14;
+  --night-border: #272136;
+  --shadow-card: 0 20px 44px -20px rgba(0, 0, 0, 0.55);
+  --shadow-sm: 0 4px 18px -6px rgba(0, 0, 0, 0.4);
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Consistent design tokens & reusable surface utilities */
+.bd-container {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.bd-heading {
+  color: var(--ink-strong);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.bd-eyebrow {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.bd-card {
+  background-color: var(--surface);
+  border: 1px solid var(--card-line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bd-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+}
+
+.bd-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--purple-2);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 0.65rem 1.25rem;
+  transition: background-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+  cursor: pointer;
+}
+
+.bd-btn-primary:hover {
+  background-color: var(--purple-hover);
+}
+
+.bd-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.bd-btn-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--blue);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 0.65rem 1.25rem;
+  transition: background-color 0.18s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.bd-btn-blue:hover {
+  background-color: var(--blue-hover);
+}
+
+.bd-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--card-line);
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 0.65rem 1.25rem;
+  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+}
+
+.bd-btn-outline:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.bd-hero-bg {
+  background:
+    radial-gradient(60% 80% at 80% 35%, rgba(118, 36, 244, 0.12) 0%, rgba(118, 36, 244, 0) 70%),
+    linear-gradient(180deg, var(--bg-band) 0%, var(--surface-soft) 100%);
+}
+
+html.dark .bd-hero-bg {
+  background:
+    radial-gradient(60% 80% at 80% 35%, rgba(139, 70, 255, 0.2) 0%, rgba(139, 70, 255, 0) 70%),
+    linear-gradient(180deg, #161122 0%, #1d1630 100%);
+}
