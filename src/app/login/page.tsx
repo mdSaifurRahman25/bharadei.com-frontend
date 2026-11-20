@@ -3,7 +3,7 @@
 import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Eye, EyeOff, Lock, LogIn, Mail } from "lucide-react";
+import { Check, Copy, Eye, EyeOff, Lock, LogIn, Mail, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { apiFetch } from "@/lib/api";
@@ -49,6 +49,24 @@ function LoginFormContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [copiedField, setCopiedField] = useState<"email" | "password" | null>(null);
+
+  const handleCopy = async (value: string, field: "email" | "password") => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedField(field);
+      toast.success(`Copied ${field === "email" ? "Admin Email" : "Admin Password"}`);
+      window.setTimeout(() => setCopiedField(null), 1500);
+    } catch {
+      toast.error("Failed to copy to clipboard.");
+    }
+  };
+
+  const handleFillAdmin = () => {
+    setEmail("admin@bharadei.com");
+    setPassword("Admin@BharaDei2026");
+    toast.success("Admin credentials filled. Click Login to continue.");
+  };
 
   const redirectParam = searchParams.get("redirect");
 
@@ -221,6 +239,71 @@ function LoginFormContent() {
               Create an account
             </Link>
           </p>
+
+          {/* Demo Admin Access Box for Examiner / Quick Testing */}
+          <div className="rounded-xl border border-[var(--card-line)] bg-[var(--surface-soft)] p-4 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[var(--purple)]">
+                <ShieldCheck size={15} />
+                Demo Admin Access
+              </span>
+              <button
+                type="button"
+                onClick={handleFillAdmin}
+                className="rounded-md bg-[var(--purple-2)] px-2.5 py-1 text-[11px] font-bold text-white hover:bg-[var(--purple-hover)] transition-colors cursor-pointer"
+              >
+                Auto-fill Admin
+              </button>
+            </div>
+
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center justify-between gap-2 rounded-lg border border-[var(--card-line)] bg-[var(--surface)] px-3 py-2">
+                <div className="truncate">
+                  <span className="font-semibold text-[var(--muted)] mr-1.5">
+                    Email:
+                  </span>
+                  <code className="font-mono font-semibold text-[var(--ink-strong)]">
+                    admin@bharadei.com
+                  </code>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopy("admin@bharadei.com", "email")}
+                  aria-label="Copy Admin Email"
+                  className="text-[var(--muted)] hover:text-[var(--purple)] shrink-0 cursor-pointer"
+                >
+                  {copiedField === "email" ? (
+                    <Check size={14} className="text-[#16774A]" />
+                  ) : (
+                    <Copy size={14} />
+                  )}
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between gap-2 rounded-lg border border-[var(--card-line)] bg-[var(--surface)] px-3 py-2">
+                <div className="truncate">
+                  <span className="font-semibold text-[var(--muted)] mr-1.5">
+                    Password:
+                  </span>
+                  <code className="font-mono font-semibold text-[var(--ink-strong)]">
+                    Admin@BharaDei2026
+                  </code>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopy("Admin@BharaDei2026", "password")}
+                  aria-label="Copy Admin Password"
+                  className="text-[var(--muted)] hover:text-[var(--purple)] shrink-0 cursor-pointer"
+                >
+                  {copiedField === "password" ? (
+                    <Check size={14} className="text-[#16774A]" />
+                  ) : (
+                    <Copy size={14} />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
