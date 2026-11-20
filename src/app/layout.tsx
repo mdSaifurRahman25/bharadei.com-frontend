@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Manrope, IBM_Plex_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -35,7 +36,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <AuthProvider>
-            <Navbar />
+            <Suspense
+              fallback={
+                <header className="h-[80px] border-b border-[var(--line)] bg-[var(--bg)]" />
+              }
+            >
+              <Navbar />
+            </Suspense>
             <main className="flex-1">{children}</main>
             <Footer />
             <Toaster richColors position="top-right" />
